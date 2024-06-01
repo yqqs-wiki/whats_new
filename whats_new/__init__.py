@@ -1,5 +1,7 @@
 from argparse import ArgumentParser, Namespace
 
+from .chillyroom import download_apk
+
 
 class Args(Namespace):
     update: bool
@@ -13,3 +15,5 @@ def main():
     args = parser.parse_args(namespace=Args())
     if args.update:
         print("hello world")
+    elif args.download:
+        download_apk()
