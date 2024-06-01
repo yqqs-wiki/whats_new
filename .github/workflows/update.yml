@@ -3,7 +3,7 @@ name: Update whats_new to wiki
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '59 1 * * *'
 
 jobs:
   update:
@@ -17,5 +17,5 @@ jobs:
         run: python -m pip install httpx mwclient
 
       - run: python -m whats_new -u
-        with: 
+        env: 
           HUIJIWIKI_PASSWORD: ${{ secrets.HUIJIWIKI_PASSWORD }}
