@@ -1,9 +1,9 @@
-name: Update whats_new to wiki
+name: Update
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '59 1 * * *'
+    - cron: '31 1 * * *'
 
 jobs:
   update:
