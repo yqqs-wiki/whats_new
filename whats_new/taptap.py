@@ -3,13 +3,15 @@ from typing import TypedDict
 
 import httpx
 
+from .parser import WhatsNewParser
+
 
 class TextDict(TypedDict):
     text: str
 
 
 @dataclass
-class WhatsNewDict:
+class WhatsNewData:
     version_label: str
     update_date: int
     whatsnew: TextDict
@@ -17,8 +19,12 @@ class WhatsNewDict:
     def get_vers(self):
         return self.version_label.split(" (")[0]
 
+    def get_whats_new(self):
+        parser = WhatsNewParser()
+        return parser.get_result(self.whatsnew["text"])
 
-def get_last_update() -> WhatsNewDict:
+
+def get_last_update() -> WhatsNewData:
     headers = {
         "user-agent": "Mozilla/6.0 (Windows NT 10.0; Win64; x64) AppleWebKit/666.66 (KHTML, like Gecko) Edg/100.0.0.0"
     }
@@ -30,4 +36,4 @@ def get_last_update() -> WhatsNewDict:
     if d["success"] == "false":
         raise RuntimeError("获取更新公告失败")
 
-    return WhatsNewDict(**d["data"]["list"][0])
+    return WhatsNewData(**d["data"]["list"][0])
