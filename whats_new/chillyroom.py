@@ -1,14 +1,9 @@
 import re
 from dataclasses import dataclass, field
-from typing import NamedTuple
 
 import httpx
 
-
-class Vers(NamedTuple):
-    major: int
-    minor: int
-    patch: int
+from .types import Vers
 
 
 @dataclass
@@ -20,11 +15,11 @@ class Apk:
     def __post_init__(self):
         self.name = self.url.split("/")[-1]
 
-        vers = [int(ver) for ver in self.name.split("-")[-1].split(".")[:3]]
+        vers = self.name.split("-")[-1].split(".")[:3]
         if len(vers) != 3:
             raise RuntimeError("官网无法获得版本号")
 
-        self.vers = Vers(*vers)
+        self.vers = Vers(*(int(ver) for ver in vers))
 
 
 def get_apk():
