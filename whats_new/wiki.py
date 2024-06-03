@@ -15,7 +15,8 @@ if TYPE_CHECKING:
 class Wiki:
     def __init__(self):
         self.vers: Vers
-        self.site = Site("yqqs.huijiwiki.com")
+        ua = 'UpdateWhatsNew/0.1 (F-park@www.github.com)'
+        self.site = Site("yqqs.huijiwiki.com", clients_useragent=ua)
         password = os.environ.get("HUIJIWIKI_PASSWORD")
         self.site.login("慕棱", password)
 
