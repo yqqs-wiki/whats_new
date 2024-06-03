@@ -19,7 +19,6 @@ def main():
         last_update = get_last_update()
         wiki = Wiki()
 
-        wiki.insert_whats_new(get_apk(), last_update.get_whats_new())
-
+        wiki.insert_whats_new(get_apk(), last_update.whatsnew["text"])
     elif args.download:
         download_apk()

@@ -3,8 +3,6 @@ from typing import TypedDict
 
 import httpx
 
-from .parser import WhatsNewParser
-
 
 class TextDict(TypedDict):
     text: str
@@ -18,10 +16,6 @@ class WhatsNewData:
 
     def get_vers(self):
         return self.version_label.split(" (")[0]
-
-    def get_whats_new(self):
-        parser = WhatsNewParser()
-        return parser.get_result(self.whatsnew["text"])
 
 
 def get_last_update() -> WhatsNewData:
