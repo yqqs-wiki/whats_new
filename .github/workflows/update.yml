@@ -30,4 +30,4 @@ jobs:
         with:
           body_path: whats_new.txt
           tag_name: ${{ steps.update.outputs.vers }}
-          files: *.apk
+          files: ./*.apk
