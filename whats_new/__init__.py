@@ -1,6 +1,8 @@
 from argparse import ArgumentParser, Namespace
 
-from .chillyroom import download_apk
+from .chillyroom import download_apk, get_apk
+from .taptap import get_last_update
+from .wiki import Wiki
 
 
 class Args(Namespace):
@@ -14,6 +16,10 @@ def main():
     parser.add_argument("-d", "--download", action="store_true")
     args = parser.parse_args(namespace=Args())
     if args.update:
-        print("hello world")
+        last_update = get_last_update()
+        wiki = Wiki()
+
+        wiki.insert_whats_new(get_apk(), last_update.get_whats_new())
+
     elif args.download:
         download_apk()

@@ -10,7 +10,7 @@ from .types import Vers
 class Apk:
     url: str
     name: str = field(init=False)
-    vers: tuple[int, int, int] = field(init=False)
+    vers: Vers = field(init=False)
 
     def __post_init__(self):
         self.name = self.url.split("/")[-1]
@@ -19,7 +19,7 @@ class Apk:
         if len(vers) != 3:
             raise RuntimeError("官网无法获得版本号")
 
-        self.vers = Vers(*(int(ver) for ver in vers))
+        self.vers = Vers(*vers)
 
 
 def get_apk():
