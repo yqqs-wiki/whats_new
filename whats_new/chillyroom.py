@@ -32,6 +32,7 @@ def get_apk():
 
 def download_apk():
     apk = get_apk()
+    print(f"APK名字为{apk.name}")
     with (
         httpx.stream("get", apk.url) as r,
         open(apk.name, mode="wb") as f,

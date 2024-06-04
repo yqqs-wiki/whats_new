@@ -35,7 +35,7 @@ class Wiki:
         m = self.find_vers(wiki_text)
 
         if tuple(map(int, apk.vers)) <= tuple(map(int, self.vers)):
-            print("已是最新版本")
+            print("更新日志已是最新版本")
             return
 
         today = date.today()
@@ -56,7 +56,7 @@ class Wiki:
             with open("whats_new.txt", "w") as f:
                 f.write(whats_new_text)
 
-        print(f"将更新至{vers_str}版本")
+        print(f"更新日志将更新至{vers_str}版本")
 
         insert_index = m.span()[0]
         self.wiki.edit(
