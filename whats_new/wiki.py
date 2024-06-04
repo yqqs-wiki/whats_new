@@ -52,7 +52,7 @@ class Wiki:
 
         if output_path := os.environ.get("GITHUB_OUTPUT"):
             with open(output_path, "a") as out:
-                out.writelines(("need_upload=1", f"vers={vers_str}"))
+                out.write("need_upload=1\n" f"vers={vers_str}\n")
             with open("whats_new.txt", "w") as f:
                 f.write(whats_new_text)
 
