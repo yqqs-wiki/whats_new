@@ -3,7 +3,7 @@ import re
 from datetime import date
 from typing import TYPE_CHECKING
 
-from mwclient import Site
+from pwiki import wiki
 
 from .parser import WhatsNewParser
 from .types import Vers
@@ -15,14 +15,8 @@ if TYPE_CHECKING:
 class Wiki:
     def __init__(self):
         self.vers: Vers
-        ua = 'UpdateWhatsNew/0.1 (F-park@www.github.com)'
-        self.site = Site("yqqs.huijiwiki.com", clients_useragent=ua)
         password = os.environ.get("HUIJIWIKI_PASSWORD")
-        self.site.login("慕棱", password)
-
-    def get_text(self, name="更新日志"):
-        self.whats_new = self.site.pages[name]
-        return self.whats_new.text()
+        self.wiki = wiki.Wiki("yqqs.huijiwiki.com", "慕棱", password or "")
 
     def find_vers(self, text: str) -> re.Match:
         if m := re.search(r"==(\d).(\d).(\d)", text):
@@ -35,7 +29,9 @@ class Wiki:
         parser = WhatsNewParser()
         whats_new = parser.get_result(whats_new_text)
 
-        wiki_text = self.get_text("" if __debug__ else "Project:Sandbox/ML")
+        page_name = "更新日志" if __debug__ else "Project:Sandbox/ML"
+        wiki_text = self.wiki.page_text(page_name)
+
         m = self.find_vers(wiki_text)
 
         if tuple(map(int, apk.vers)) <= tuple(map(int, self.vers)):
@@ -63,6 +59,7 @@ class Wiki:
         print(f"将更新至{vers_str}版本")
 
         insert_index = m.span()[0]
-        self.whats_new.edit(
-            wiki_text[:insert_index] + content + wiki_text[insert_index:], bot=False
+        self.wiki.edit(
+            page_name,
+            wiki_text[:insert_index] + content + wiki_text[insert_index:],
         )
