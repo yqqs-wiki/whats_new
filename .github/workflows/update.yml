@@ -19,7 +19,7 @@ jobs:
           cache: "pip"
 
       - name: Install dependencies
-        run: python -m pip install httpx pwiki
+        run: python -m pip install -r requirements.txt
 
       - run: python -m whats_new -u
         id: update
