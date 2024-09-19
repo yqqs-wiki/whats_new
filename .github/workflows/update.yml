@@ -30,11 +30,11 @@ jobs:
           OLD_VER: ${{ github.ref_name }}
         run: |
           python -m whats_new -u
-          python -m whats_new -d
+      #     python -m whats_new -d
 
-      - if: ${{ steps.update.outputs.need_upload }}
-        uses: softprops/action-gh-release@v2
-        with:
-          body_path: whats_new.txt
-          tag_name: ${{ steps.update.outputs.new_ver }}
-          files: ./*.apk
+      # - if: ${{ steps.update.outputs.need_upload }}
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     body_path: whats_new.txt
+      #     tag_name: ${{ steps.update.outputs.new_ver }}
+      #     files: ./*.apk

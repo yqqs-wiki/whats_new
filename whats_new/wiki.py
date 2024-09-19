@@ -34,8 +34,9 @@ class Wiki:
         page_text = page.text()
 
         m = self.find_vers(page_text)
+        wiki_vers = m.groups()
 
-        if tuple(map(int, apk.vers)) <= tuple(map(int, m.groups())):
+        if tuple(map(int, apk.vers)) <= tuple(map(int, wiki_vers)):
             print("维基不需要最新")
             return
 
