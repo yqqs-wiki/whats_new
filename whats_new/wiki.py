@@ -29,7 +29,7 @@ class Wiki:
         whats_new = parser.get_result(whats_new_text)
 
         page_name = "更新日志" if __debug__ else "Project:Sandbox/ML"
-        print(f"更新维基页面为 {page_name}")
+        print(f"更新维基页面：{page_name}")
         page = self.site.pages[page_name]
         page_text = page.text()
 

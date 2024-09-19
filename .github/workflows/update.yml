@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
 
-      - name: Update huijiwiki and release
+      - name: Update huijiwiki # and release
         id: update
         env:
           HUIJIWIKI_PASSWORD: ${{ secrets.HUIJIWIKI_PASSWORD }}
