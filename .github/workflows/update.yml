@@ -21,9 +21,11 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
 
-      - id: update
+      - name: Update huijiwiki and release
+        id: update
         env:
           HUIJIWIKI_PASSWORD: ${{ secrets.HUIJIWIKI_PASSWORD }}
+          HUIJIWIKI_KEY: ${{ secrets.HUIJIWIKI_KEY }}
           PYTHONOPTIMIZE: ${{ vars.PYTHONOPTIMIZE }}
         run: |
           export git_tag=`git tag`
