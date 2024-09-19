@@ -13,7 +13,7 @@ def set_github_output(d: dict):
 
 
 def check_release_needed(apk: "Apk"):
-    if tuple(map(int, apk.vers)) <= tuple(
+    if tuple(map(int, apk.vers)) > tuple(
         map(int, environ.get("git_tag", "").split("."))
     ):
         new_vers_str = ".".join(apk.vers)
