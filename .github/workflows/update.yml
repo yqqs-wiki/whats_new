@@ -21,18 +21,18 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
 
-      - run: python -m whats_new -u
-        id: update
+      - id: update
         env:
           HUIJIWIKI_PASSWORD: ${{ secrets.HUIJIWIKI_PASSWORD }}
           PYTHONOPTIMIZE: ${{ vars.PYTHONOPTIMIZE }}
-
-      - if: ${{ steps.update.outputs.need_upload }}
-        run: python -m whats_new -d
+        run: |
+          export git_tag=`git tag`
+          python -m whats_new -u
+          python -m whats_new -d
 
       - if: ${{ steps.update.outputs.need_upload }}
         uses: softprops/action-gh-release@v2
         with:
           body_path: whats_new.txt
-          tag_name: ${{ steps.update.outputs.vers }}
+          tag_name: ${{ steps.update.outputs.new_vers }}
           files: ./*.apk

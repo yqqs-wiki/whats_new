@@ -1,6 +1,7 @@
 from argparse import ArgumentParser, Namespace
 
 from .chillyroom import download_apk, get_apk
+from .github import check_release_needed
 from .taptap import get_last_update
 from .wiki import Wiki
 
@@ -21,4 +22,5 @@ def main():
 
         wiki.insert_whats_new(get_apk(), last_update.whatsnew["text"])
     elif args.download:
-        download_apk()
+        if check_release_needed(get_apk()):
+            download_apk()

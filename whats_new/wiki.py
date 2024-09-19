@@ -29,14 +29,14 @@ class Wiki:
         whats_new = parser.get_result(whats_new_text)
 
         page_name = "更新日志" if __debug__ else "Project:Sandbox/ML"
-        print(f"更新页面为 {page_name}")
+        print(f"更新维基页面为 {page_name}")
         page = self.site.pages[page_name]
         page_text = page.text()
 
         m = self.find_vers(page_text)
 
         if tuple(map(int, apk.vers)) <= tuple(map(int, m.groups())):
-            print("已是最新版本")
+            print("维基不需要最新")
             return
 
         today = date.today()
@@ -51,13 +51,8 @@ class Wiki:
             )
         )
 
-        if output_path := environ.get("GITHUB_OUTPUT"):
-            with open(output_path, "a") as out:
-                out.write("need_upload=1\n" f"vers={vers_str}\n")
-            with open("whats_new.txt", "w") as f:
-                f.write(whats_new_text)
-
-        print(f"将更新至{vers_str}版本")
+        with open("whats_new.txt", "w") as f:
+            f.write(whats_new_text)
 
         insert_index = m.span()[0]
         page.edit(
