@@ -1,3 +1,4 @@
+import subprocess
 from os import environ
 from typing import TYPE_CHECKING
 
@@ -13,9 +14,14 @@ def set_github_output(d: dict):
 
 
 def check_release_needed(apk: "Apk"):
-    if tuple(map(int, apk.vers)) > tuple(
-        map(int, environ.get("git_tag", "").split("."))
-    ):
+    old_vers_str = (
+        subprocess.run("git tag", shell=True, capture_output=True)
+        .stdout.decode()
+        .removesuffix("\n")
+    )
+    print(f"旧版本为：{old_vers_str}")
+
+    if tuple(map(int, apk.vers)) > tuple(map(int, old_vers_str.split("."))):
         new_vers_str = ".".join(apk.vers)
         print(f"将创建发行版：{new_vers_str}")
         set_github_output({"need_upload": 1, "new_vers": new_vers_str})

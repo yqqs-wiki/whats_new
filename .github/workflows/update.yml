@@ -28,7 +28,6 @@ jobs:
           HUIJIWIKI_KEY: ${{ secrets.HUIJIWIKI_KEY }}
           PYTHONOPTIMIZE: ${{ vars.PYTHONOPTIMIZE }}
         run: |
-          export git_tag=`git tag`
           python -m whats_new -u
           python -m whats_new -d
 
