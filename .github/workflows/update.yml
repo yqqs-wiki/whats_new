@@ -27,6 +27,7 @@ jobs:
           HUIJIWIKI_PASSWORD: ${{ secrets.HUIJIWIKI_PASSWORD }}
           HUIJIWIKI_KEY: ${{ secrets.HUIJIWIKI_KEY }}
           PYTHONOPTIMIZE: ${{ vars.PYTHONOPTIMIZE }}
+          OLD_VER: ${{ github.ref_name }}
         run: |
           python -m whats_new -u
           python -m whats_new -d
@@ -35,5 +36,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           body_path: whats_new.txt
-          tag_name: ${{ steps.update.outputs.new_vers }}
+          tag_name: ${{ steps.update.outputs.new_ver }}
           files: ./*.apk
